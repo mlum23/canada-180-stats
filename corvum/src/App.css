@@ -1,5 +1,31 @@
 #app-container {
     text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#modal {
+    /* display: flex; */
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* align-items: center;
+    justify-content: center; */
+}
+
+#info {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+#info p{
+    font-size: 18px;
 }
 
 svg {
@@ -7,7 +33,7 @@ svg {
     margin: auto;
 }
 
-svg:hover {
+g:hover {
     cursor: pointer;
 }
 
