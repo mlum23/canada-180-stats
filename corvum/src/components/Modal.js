@@ -1,7 +1,25 @@
 import Graph from './Graph';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo }) => {
+    let [dataKey, setDataKey] = useState('total_cases');
+    let [graphTitle, setGraphTitle] = useState('Last 90 Days: Total Cases')
+
+    const handleOnChange = (event) => {
+        let titles = {
+            'total_cases': 'Total Cases',
+            'total_fatalities': 'Total Fatalities',
+            'total_hospitalizations': 'Total Hospitalizations',
+            'total_vaccinated': 'Total Vaccinated',
+            'total_recoveries': 'Total Recoveries',
+            'total_tests': 'Total Tests',
+            'total_vaccines_distributed': 'Total Vaccines Distributed'
+
+        }
+        setGraphTitle(`Last 90 Days: ${titles[event.target.value]}`);
+        setDataKey(event.target.value);
+    }
+
     const isValidModalInfo = () => {
         return modalInfo !== null;
     }
@@ -65,7 +83,18 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo }) => {
                     <p><b>Deaths: </b>{getCases('total_fatalities')}</p>
                     <p><b>Tests: </b>{getCases('total_tests')}</p>
                     <p><b>Hospitalization: </b>{getCases('total_hospitalizations')}</p>
-                    <Graph graphInfo={graphInfo} province={getModalInfo('province')} />
+
+                    <h3 id="graph-title">{graphTitle}</h3>
+                    <Graph graphInfo={graphInfo} province={getModalInfo('province')} dataKey={dataKey} />
+                    <select id="graph-category" onChange={handleOnChange}>
+                        <option value="total_cases" defaultValue>Total Cases</option>
+                        <option value="total_fatalities">Total Fatalities</option>
+                        <option value="total_hospitalizations">Total Hospitalizations</option>
+                        <option value="total_vaccinated">Total Vaccinated</option>
+                        <option value="total_recoveries">Total Recoveries</option>
+                        <option value="total_tests">Total Tests</option>
+                        <option value="total_vaccines_distributed">Total Vaccines Distributed</option>
+                    </select>
                 </div>
             </div>
         </div>
