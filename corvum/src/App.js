@@ -1,11 +1,13 @@
 import './App.css';
 import Map from './components/Map';
 import React, { useState, useEffect } from 'react';
+import Modal from './components/Modal';
 
 function App() {
   const [provinceReport, setProvinceReport] = useState([]);
   const [modalInfo, setModalInfo] = useState(null);
-  const [displayModal, setDisplayModal] = useState('none');
+  const [displayModal, setDisplayModal] = useState('none')
+  const [graphInfo, setGraphInfo] = useState([]);
 
   const API = 'http://api.covid19tracker.ca/reports/province';
 
@@ -15,6 +17,15 @@ function App() {
     let dd = String(today.getDate()).padStart(2, '0');
     let mm = String(today.getMonth() + 1).padStart(2, '0');
     let yyyy = today.getFullYear();
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  const getDateLast30Day = () => {
+    let date = new Date();
+    date.setDate(date.getDate() - 29);
+    let dd = String(date.getDate()).padStart(2, '0');
+    let mm = String(date.getMonth() + 1).padStart(2, '0');
+    let yyyy = date.getFullYear();
     return `${yyyy}-${mm}-${dd}`;
   }
 
@@ -29,27 +40,9 @@ function App() {
     }
   }
 
-  const getActiveCases = () => {
-    if (modalInfo !== null) {
-      return modalInfo.data[0].total_cases - modalInfo.data[0].total_fatalities - modalInfo.data[0].total_recoveries;
-    }
-  }
+  useEffect(() => {
 
-  const getCases = (caseName) => {
-    if (modalInfo !== null) {
-      return modalInfo.data[0][caseName];
-    }
-  }
-
-  const getLastUpdated = () => {
-    if (modalInfo !== null) {
-      return modalInfo.last_updated;
-    }
-  }
-
-  const onClickExitModal = () => {
-    setDisplayModal("none");
-  }
+  }, [displayModal])
 
   useEffect(() => {
     const PROVINCE_CODE = [
@@ -59,9 +52,11 @@ function App() {
     ];
 
     let fetchCalls = []
+    let last30Days = []
 
     for (const province of PROVINCE_CODE) {
       fetchCalls.push(fetch(`${API}/${province}?date=${getTodaysDate()}`));
+      last30Days.push(fetch(`${API}/${province}?after=${getDateLast30Day()}`))
     }
 
     Promise.all(fetchCalls).then(results =>
@@ -70,23 +65,24 @@ function App() {
       }))
     )
 
+    Promise.all(last30Days).then(results =>
+      results.forEach(result => result.json().then(data => {
+        setGraphInfo(graphInfo => [...graphInfo, data])
+      }))
+    )
   }, []);
 
   return (
     <div id="app-container">
-      <div id="modal" style={{ display: displayModal }}>
-        <div id="info">
-          <span className="close" onClick={onClickExitModal}>&times;</span>
-          <h2>Last Updated: {getLastUpdated()}</h2>
-          <p><b>Active Cases: </b>{getActiveCases()}</p>
-          <p><b>Total Cases: </b>{getCases('total_cases')}</p>
-          <p><b>Deaths: </b>{getCases('total_fatalities')}</p>
-          <p><b>Tests: </b>{getCases('total_tests')}</p>
-          <p><b>Hospitalization: </b>{getCases('total_hospitalizations')}</p>
-        </div>
-      </div>
+      <Modal
+        modalInfo={modalInfo}
+        setDisplayModal={setDisplayModal}
+        displayModal={displayModal}
+        getProvince={getProvince}
+        graphInfo={graphInfo}
+      />
       <h1>Canada Daily Covid-19 Tracker</h1>
-      <Map provinceReport={provinceReport} getProvince={getProvince} />
+      <Map getProvince={getProvince} />
     </div>
   );
 }

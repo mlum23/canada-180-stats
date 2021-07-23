@@ -12,24 +12,51 @@
     width: 100%;
     position: fixed;
     background-color: rgba(0, 0, 0, 0.7);
+}
 
+#close-modal {
+    text-align: right;
+    font-size: 36px;
+}
+
+#close-modal:hover {
+    cursor: pointer;
 }
 
 #info {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 5% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 50%; /* Could be more or less, depending on screen size */
+    height: auto;
+    width: auto; /* Could be more or less, depending on screen size */
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 500px;
+    overflow-y: scroll;
 }
 
 #info p{
     font-size: 18px;
 }
 
-svg {
+#map-container {
+    margin-top: -120px;
+    /* width: 50%; */
+}
+
+.canada-map{
     display: block;
     margin: auto;
+    width: 55%;
+}
+
+.recharts-surface {
+    padding: -5%;
+}
+
+#test {
+    margin-top: -10%;
 }
 
 g:hover {
