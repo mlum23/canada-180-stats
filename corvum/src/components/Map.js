@@ -1,10 +1,10 @@
 import CanadaMap from "react-canada-map"
 
-const Map = (provinceReport) => {
+const Map = (props) => {
     const mapClickHandler = (province, event) => {
         console.log("province clicked: ", province)
-
-        console.log(provinceReport);
+        console.log(props.provinceReport);
+        props.getProvince(province);
     }
 
     const customizeProvince = () => {

@@ -4,8 +4,11 @@ import React, { useState, useEffect } from 'react';
 
 function App() {
   const [provinceReport, setProvinceReport] = useState([]);
+  const [modalInfo, setModalInfo] = useState(null);
+  const [displayModal, setDisplayModal] = useState('none');
 
   const API = 'http://api.covid19tracker.ca/reports/province';
+
 
   const getTodaysDate = () => {
     let today = new Date();
@@ -15,7 +18,38 @@ function App() {
     return `${yyyy}-${mm}-${dd}`;
   }
 
+  const getProvince = (provinceName) => {
+    for (const report of provinceReport) {
+      if (report.province === provinceName) {
+        console.log(report);
+        setModalInfo(report);
+        setDisplayModal("flex");
+        break;
+      }
+    }
+  }
 
+  const getActiveCases = () => {
+    if (modalInfo !== null) {
+      return modalInfo.data[0].total_cases - modalInfo.data[0].total_fatalities - modalInfo.data[0].total_recoveries;
+    }
+  }
+
+  const getCases = (caseName) => {
+    if (modalInfo !== null) {
+      return modalInfo.data[0][caseName];
+    }
+  }
+
+  const getLastUpdated = () => {
+    if (modalInfo !== null) {
+      return modalInfo.last_updated;
+    }
+  }
+
+  const onClickExitModal = () => {
+    setDisplayModal("none");
+  }
 
   useEffect(() => {
     const PROVINCE_CODE = [
@@ -40,19 +74,19 @@ function App() {
 
   return (
     <div id="app-container">
-      <div id="modal">
+      <div id="modal" style={{ display: displayModal }}>
         <div id="info">
-          {/* <span class="close">&times;</span> */}
-          <h2>{getTodaysDate()}</h2>
-          <p><b>Active Cases: </b>total_case - total_fatalities - total_recoveries</p>
-          <p><b>Total Cases: </b>total_case</p>
-          <p><b>Deaths: </b>total_deaths</p>
-          <p><b>Tests: </b>total_tests</p>
-          <p><b>Hospitalization: </b>total_hospitalizations</p>
+          <span className="close" onClick={onClickExitModal}>&times;</span>
+          <h2>Last Updated: {getLastUpdated()}</h2>
+          <p><b>Active Cases: </b>{getActiveCases()}</p>
+          <p><b>Total Cases: </b>{getCases('total_cases')}</p>
+          <p><b>Deaths: </b>{getCases('total_fatalities')}</p>
+          <p><b>Tests: </b>{getCases('total_tests')}</p>
+          <p><b>Hospitalization: </b>{getCases('total_hospitalizations')}</p>
         </div>
       </div>
       <h1>Canada Daily Covid-19 Tracker</h1>
-      <Map provinceReport={provinceReport} />
+      <Map provinceReport={provinceReport} getProvince={getProvince} />
     </div>
   );
 }
