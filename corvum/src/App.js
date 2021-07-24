@@ -9,7 +9,7 @@ function App() {
   const [displayModal, setDisplayModal] = useState('none')
   const [graphInfo, setGraphInfo] = useState([]);
 
-  const API = 'http://api.covid19tracker.ca/reports/province';
+  const API = 'https://api.covid19tracker.ca/reports/province';
 
 
   const getTodaysDate = () => {
