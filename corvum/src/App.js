@@ -81,7 +81,7 @@ function App() {
         getProvince={getProvince}
         graphInfo={graphInfo}
       />
-      <h1>Canada Daily Covid-19 Tracker</h1>
+      <h1 id="app-title">Canada Daily Covid-19 Tracker</h1>
       <Map getProvince={getProvince} />
     </div>
   );

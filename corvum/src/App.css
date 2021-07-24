@@ -1,7 +1,14 @@
 #app-container {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     justify-content: center;
     align-items: center;
+}
+
+#app-title {
+    font-size: 3vmax;
+    margin-top: -35vmax;
 }
 
 #modal {
@@ -12,6 +19,7 @@
     width: 100%;
     position: fixed;
     background-color: rgba(0, 0, 0, 0.7);
+    z-index: 5;
 }
 
 #close-modal {
@@ -31,7 +39,7 @@
 
 #info {
     background-color: #fefefe;
-    margin: 5% auto; /* 15% from the top and centered */
+    margin: 5% auto;
     padding: 20px;
     border: 1px solid #888;
     height: auto;
@@ -40,6 +48,7 @@
     padding-right: 5%;
     overflow-y: overlay;
     border-radius: 10px;
+    z-index: 5;
 
 }
 
@@ -48,30 +57,42 @@
 }
 
 #map-container {
-    margin-top: -120px;
+    position: absolute;
+    /* margin-top: 50%; */
+    width: 75vmax;
+    height: auto;
 }
 
-.canada-map{
-    display: block;
+svg.canada-map{
     margin: auto;
-    padding: 20px;
-    width: 55%;
+    width: 50vmax;
 }
 
 .recharts-surface {
     padding: -5%;
 }
 
+.canada-map > g {
+    width: 55vmax;
+}
+
 g:hover {
     cursor: pointer;
 }
 
-@media only screen and (max-width: 768px) {
-    .canada-map{
-        display: block;
-        margin: auto;
-        padding: 20px;
-        width: 100%;
+
+/* @media only screen and (max-width: 768px) {
+    #map-container {
+        margin-top: 50%;
+        width: 75vmax;
     }    
 }
+
+@media only screen and (max-width: 750px) {
+    #map-container {
+        margin-top: 100%;
+
+        width: 65vmax;
+    }     
+} */
 
