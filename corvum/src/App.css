@@ -15,12 +15,18 @@
 }
 
 #close-modal {
+    position: fixed;
     text-align: right;
     font-size: 36px;
+    margin-left: -3%;
 }
 
 #close-modal:hover {
     cursor: pointer;
+}
+
+#graph-title {
+    padding-top: 20px;
 }
 
 #info {
@@ -32,8 +38,9 @@
     width: auto; /* Could be more or less, depending on screen size */
     padding-left: 5%;
     padding-right: 5%;
-    padding-bottom: 500px;
-    overflow-y: scroll;
+    overflow-y: overlay;
+    border-radius: 10px;
+
 }
 
 #info p{
@@ -42,7 +49,6 @@
 
 #map-container {
     margin-top: -120px;
-    /* width: 50%; */
 }
 
 .canada-map{
@@ -56,11 +62,16 @@
     padding: -5%;
 }
 
-#test {
-    margin-top: -10%;
-}
-
 g:hover {
     cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+    .canada-map{
+        display: block;
+        margin: auto;
+        padding: 20px;
+        width: 100%;
+    }    
 }
 
