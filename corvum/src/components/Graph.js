@@ -1,4 +1,4 @@
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 const Graph = ({ graphInfo, province, dataKey, compareProvince }) => {
 
     const getProvinceInfo = (province) => {
@@ -13,10 +13,11 @@ const Graph = ({ graphInfo, province, dataKey, compareProvince }) => {
         if (compareProvince != null) {
             return (
                 <Line
+                    name={compareProvince}
                     type="monotone"
                     data={getProvinceInfo(compareProvince)}
                     dataKey={dataKey}
-                    stroke="#ff84d8"
+                    stroke="#8B0000"
                     dot={false}
                 />
             )
@@ -36,11 +37,13 @@ const Graph = ({ graphInfo, province, dataKey, compareProvince }) => {
             <XAxis dataKey="date" allowDuplicatedCategory={false} />
             <YAxis />
             <Tooltip />
+            <Legend />
             <Line
+                name={province}
                 type="monotone"
                 data={getProvinceInfo(province)}
                 dataKey={dataKey}
-                stroke="#8884d8"
+                stroke="#4169E1"
                 dot={false}
             />
             {showCompare()}
