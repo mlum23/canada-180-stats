@@ -1,8 +1,7 @@
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
-const Graph = ({ graphInfo, province, dataKey }) => {
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+const Graph = ({ graphInfo, province, dataKey, compareProvince }) => {
 
-    const getProvinceInfo = () => {
-        console.log('getPronvinceInfo');
+    const getProvinceInfo = (province) => {
         for (const info of graphInfo) {
             if (info.province === province) {
                 return info.data;
@@ -10,17 +9,42 @@ const Graph = ({ graphInfo, province, dataKey }) => {
         }
     }
 
+    const showCompare = () => {
+        if (compareProvince != null) {
+            return (
+                <Line
+                    type="monotone"
+                    data={getProvinceInfo(compareProvince)}
+                    dataKey={dataKey}
+                    stroke="#ff84d8"
+                    dot={false}
+                />
+            )
+
+        }
+
+    }
+
     return (
+
         <LineChart
             width={600}
             height={300}
-            data={getProvinceInfo()}
             margin={{ top: 5, right: 20, bottom: 5, left: 25 }}
         >
-            <Line type="monotone" dataKey={dataKey} stroke="#8884d8" dot={false} />
-            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-            <XAxis dataKey="date" />
+            <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
+            <XAxis dataKey="date" allowDuplicatedCategory={false} />
             <YAxis />
+            <Tooltip />
+            <Line
+                type="monotone"
+                data={getProvinceInfo(province)}
+                dataKey={dataKey}
+                stroke="#8884d8"
+                dot={false}
+            />
+            {showCompare()}
+
         </LineChart>
     )
 }

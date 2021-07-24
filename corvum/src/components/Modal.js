@@ -4,8 +4,9 @@ import React, { useEffect, useState } from 'react';
 const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo }) => {
     let [dataKey, setDataKey] = useState('total_cases');
     let [graphTitle, setGraphTitle] = useState('Last 90 Days: Total Cases')
+    let [compareProvince, setCompareProvince] = useState(null);
 
-    const handleOnChange = (event) => {
+    const changeTitle = (event) => {
         let titles = {
             'total_cases': 'Total Cases',
             'total_fatalities': 'Total Fatalities',
@@ -18,6 +19,10 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo }) => {
         }
         setGraphTitle(`Last 90 Days: ${titles[event.target.value]}`);
         setDataKey(event.target.value);
+    }
+
+    const handleOnChangeCompare = (event) => {
+        setCompareProvince(event.target.value);
     }
 
     const isValidModalInfo = () => {
@@ -85,8 +90,13 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo }) => {
                     <p><b>Hospitalization: </b>{getCases('total_hospitalizations')}</p>
 
                     <h3 id="graph-title">{graphTitle}</h3>
-                    <Graph graphInfo={graphInfo} province={getModalInfo('province')} dataKey={dataKey} />
-                    <select id="graph-category" onChange={handleOnChange}>
+                    <Graph
+                        graphInfo={graphInfo}
+                        province={getModalInfo('province')}
+                        dataKey={dataKey}
+                        compareProvince={compareProvince}
+                    />
+                    <select id="graph-category" onChange={changeTitle}>
                         <option value="total_cases" defaultValue>Total Cases</option>
                         <option value="total_fatalities">Total Fatalities</option>
                         <option value="total_hospitalizations">Total Hospitalizations</option>
@@ -94,6 +104,23 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo }) => {
                         <option value="total_recoveries">Total Recoveries</option>
                         <option value="total_tests">Total Tests</option>
                         <option value="total_vaccines_distributed">Total Vaccines Distributed</option>
+                    </select>
+
+                    <select id="graph-compare" onChange={handleOnChangeCompare}>
+                        <option defaultValue hidden>Compare with a province</option>
+                        <option value="AB">Alberta</option>
+                        <option value="BC">British Columbia</option>
+                        <option value="SK">Saskatchewan</option>
+                        <option value="MB">Manitoba</option>
+                        <option value="ON">Ontario</option>
+                        <option value="QC">Quebec</option>
+                        <option value="NL">Newfoundland and Labrador</option>
+                        <option value="NB">New Brunswick</option>
+                        <option value="PE">Prince Edward Island</option>
+                        <option value="NS">Nova Scotia</option>
+                        <option value="YT">Yukon</option>
+                        <option value="NT">Northwest Territories</option>
+                        <option value="NU">Nunavut</option>
                     </select>
                 </div>
             </div>
