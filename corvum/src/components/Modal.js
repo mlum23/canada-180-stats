@@ -117,17 +117,18 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo, yeterdaysD
                     <option defaultValue hidden value='default-value'>Compare with a region</option>
                     <option value="alberta">Alberta</option>
                     <option value="british columbia">British Columbia</option>
-                    <option value="saskatchewan">Saskatchewan</option>
                     <option value="manitoba">Manitoba</option>
-                    <option value="ontario">Ontario</option>
-                    <option value="quebec">Quebec</option>
                     <option value="newfoundland and labrador">Newfoundland and Labrador</option>
                     <option value="new brunswick">New Brunswick</option>
-                    <option value="prince edward island">Prince Edward Island</option>
-                    <option value="nova scotia">Nova Scotia</option>
-                    <option value="yukon">Yukon</option>
                     <option value="northwest territories">Northwest Territories</option>
+                    <option value="nova scotia">Nova Scotia</option>
                     <option value="nunavut">Nunavut</option>
+                    <option value="ontario">Ontario</option>
+                    <option value="prince edward island">Prince Edward Island</option>
+                    <option value="quebec">Quebec</option>
+                    <option value="saskatchewan">Saskatchewan</option>
+                    <option value="yukon">Yukon</option>
+
                 </select>
             </div>
         </div>
