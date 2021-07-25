@@ -80,13 +80,13 @@ function App() {
       "nunavut",
     ];
 
-    let last90Days = [];
+    let last180Days = [];
 
     for (const province of PROVINCE_CODE) {
-      last90Days.push(fetch(`${API}/${province}?lastdays=180`));
+      last180Days.push(fetch(`${API}/${province}?lastdays=180`));
     }
 
-    Promise.all(last90Days).then((results) =>
+    Promise.all(last180Days).then((results) =>
       results.forEach((result) =>
         result.json().then((data) => {
           setProvinceReport((provinceReport) => [...provinceReport, data]);
