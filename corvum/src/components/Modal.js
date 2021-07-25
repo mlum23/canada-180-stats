@@ -35,7 +35,6 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo, yeterdaysD
 
     const getNewCases = (caseName) => {
         if (isValidModalInfo()) {
-            console.log(getDate(1));
             let newCases = modalInfo.timeline[caseName][yeterdaysDate] - modalInfo.timeline[caseName][getDate(2)];
             return newCases;
         }
