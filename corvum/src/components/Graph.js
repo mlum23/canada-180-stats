@@ -33,7 +33,7 @@ const Graph = ({ graphInfo, province, dataKey, compareProvince }) => {
                 margin={{ top: 5, right: 20, bottom: 5, left: 25 }}
             >
                 <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
-                <XAxis dataKey={dataKey} allowDuplicatedCategory={false} />
+                <XAxis dataKey='date' allowDuplicatedCategory={false} />
                 <YAxis />
                 <Tooltip />
                 <Legend />
