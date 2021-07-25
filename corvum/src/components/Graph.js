@@ -3,8 +3,8 @@ const Graph = ({ graphInfo, province, dataKey, compareProvince }) => {
 
     const getProvinceInfo = (province) => {
         for (const info of graphInfo) {
-            if (info.province === province) {
-                return info.data;
+            if (info[0].province === province) {
+                return info;
             }
         }
     }
@@ -23,6 +23,7 @@ const Graph = ({ graphInfo, province, dataKey, compareProvince }) => {
             );
         }
     }
+    console.log(graphInfo);
 
     return (
         <ResponsiveContainer width="100%" height={300}>
@@ -32,7 +33,7 @@ const Graph = ({ graphInfo, province, dataKey, compareProvince }) => {
                 margin={{ top: 5, right: 20, bottom: 5, left: 25 }}
             >
                 <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
-                <XAxis dataKey="date" allowDuplicatedCategory={false} />
+                <XAxis dataKey={dataKey} allowDuplicatedCategory={false} />
                 <YAxis />
                 <Tooltip />
                 <Legend />

@@ -1,24 +1,28 @@
 import Graph from './Graph';
 import React, { useEffect, useState } from 'react';
 
-const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo }) => {
-    let [dataKey, setDataKey] = useState('total_cases');
+const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo, yeterdaysDate, yesterdaysDateText }) => {
+    let [dataKey, setDataKey] = useState('cases');
     let [graphTitle, setGraphTitle] = useState('Last 90 Days: Total Cases')
     let [compareProvince, setCompareProvince] = useState(null);
 
     const changeTitle = (event) => {
         let titles = {
-            'total_cases': 'Total Cases',
-            'total_fatalities': 'Total Fatalities',
-            'total_hospitalizations': 'Total Hospitalizations',
-            'total_vaccinated': 'Total Vaccinated',
-            'total_recoveries': 'Total Recoveries',
-            'total_tests': 'Total Tests',
-            'total_vaccines_distributed': 'Total Vaccines Distributed'
-
+            'cases': 'Total Cases',
+            'deaths': 'Total Deaths',
+            'recovered': 'Total Recovered',
         }
         setGraphTitle(`Last 90 Days: ${titles[event.target.value]}`);
         setDataKey(event.target.value);
+    }
+
+    const getDate = (daysBefore = 0) => {
+        let yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - daysBefore);
+        let dd = String(yesterday.getDate());
+        let mm = String(yesterday.getMonth() + 1);
+        let yy = yesterday.getFullYear().toString().substr(-2)
+        return `${mm}/${dd}/${yy}`;
     }
 
     const handleOnChangeCompare = (event) => {
@@ -29,15 +33,17 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo }) => {
         return modalInfo !== null;
     }
 
-    const getActiveCases = () => {
+    const getNewCases = (caseName) => {
         if (isValidModalInfo()) {
-            return modalInfo.data[0].total_cases - modalInfo.data[0].total_fatalities - modalInfo.data[0].total_recoveries;
+            console.log(getDate(1));
+            let newCases = modalInfo.timeline[caseName][yeterdaysDate] - modalInfo.timeline[caseName][getDate(2)];
+            return newCases;
         }
     }
 
     const getCases = (caseName) => {
         if (isValidModalInfo()) {
-            return modalInfo.data[0][caseName];
+            return modalInfo.timeline[caseName][yeterdaysDate]
         }
     }
 
@@ -82,12 +88,12 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo }) => {
                 <div id="close-modal" onClick={onClickExitModal}>&times;</div>
                 {/* <div id="test"> */}
                 <h1>{getProvinceFullName()}</h1>
-                <h2>Last Updated: {getModalInfo('last_updated')}</h2>
-                <p><b>Active Cases: </b>{getActiveCases()}</p>
-                <p><b>Total Cases: </b>{getCases('total_cases')}</p>
-                <p><b>Deaths: </b>{getCases('total_fatalities')}</p>
-                <p><b>Tests: </b>{getCases('total_tests')}</p>
-                <p><b>Hospitalization: </b>{getCases('total_hospitalizations')}</p>
+                <h2>Last Updated: {yesterdaysDateText}</h2>
+                <p><b>Total Cases: </b>{getCases('cases')}</p>
+                <p><b>New Cases: </b>{getNewCases('cases')}</p>
+                <p><b>Total Deaths: </b>{getCases('deaths')}</p>
+                <p><b>New Deaths: </b>{getNewCases('deaths')}</p>
+                <p><b>Recovered: </b>{getCases('recovered')}</p>
 
                 <h3 id="graph-title">{graphTitle}</h3>
                 <Graph
@@ -97,30 +103,26 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo }) => {
                     compareProvince={compareProvince}
                 />
                 <select id="graph-category" onChange={changeTitle}>
-                    <option value="total_cases" defaultValue>Total Cases</option>
-                    <option value="total_fatalities">Total Fatalities</option>
-                    <option value="total_hospitalizations">Total Hospitalizations</option>
-                    <option value="total_vaccinated">Total Vaccinated</option>
-                    <option value="total_recoveries">Total Recoveries</option>
-                    <option value="total_tests">Total Tests</option>
-                    <option value="total_vaccines_distributed">Total Vaccines Distributed</option>
+                    <option value="cases" defaultValue>Total Cases</option>
+                    <option value="deaths">Total Deaths</option>
+                    <option value="recovered">Total Recovered</option>
                 </select>
 
                 <select id="graph-compare" onChange={handleOnChangeCompare}>
                     <option defaultValue hidden>Compare with a province</option>
-                    <option value="AB">Alberta</option>
-                    <option value="BC">British Columbia</option>
-                    <option value="SK">Saskatchewan</option>
-                    <option value="MB">Manitoba</option>
-                    <option value="ON">Ontario</option>
-                    <option value="QC">Quebec</option>
-                    <option value="NL">Newfoundland and Labrador</option>
-                    <option value="NB">New Brunswick</option>
-                    <option value="PE">Prince Edward Island</option>
-                    <option value="NS">Nova Scotia</option>
-                    <option value="YT">Yukon</option>
-                    <option value="NT">Northwest Territories</option>
-                    <option value="NU">Nunavut</option>
+                    <option value="alberta">Alberta</option>
+                    <option value="british columbia">British Columbia</option>
+                    <option value="saskatchewan">Saskatchewan</option>
+                    <option value="manitoba">Manitoba</option>
+                    <option value="ontario">Ontario</option>
+                    <option value="quebec">Quebec</option>
+                    <option value="newfoundland and labrador">Newfoundland and Labrador</option>
+                    <option value="new brunswick">New Brunswick</option>
+                    <option value="prince edward island">Prince Edward Island</option>
+                    <option value="nova scotia">Nova Scotia</option>
+                    <option value="yukon">Yukon</option>
+                    <option value="northwest territories">Northwest Territories</option>
+                    <option value="nunavut">Nunavut</option>
                 </select>
                 {/* </div> */}
             </div>

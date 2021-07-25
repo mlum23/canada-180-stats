@@ -9,24 +9,22 @@ function App() {
   const [displayModal, setDisplayModal] = useState('none')
   const [graphInfo, setGraphInfo] = useState([]);
 
-  const API = 'https://api.covid19tracker.ca/reports/province';
+  const API = 'https://disease.sh/v3/covid-19/historical/can';
 
 
-  const getTodaysDate = () => {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0');
-    let yyyy = today.getFullYear();
-    return `${yyyy}-${mm}-${dd}`;
+  const getYesterdaysDate = () => {
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    let dd = String(yesterday.getDate());
+    let mm = String(yesterday.getMonth() + 1);
+    let yy = yesterday.getFullYear().toString().substr(-2)
+    return `${mm}/${dd}/${yy}`;
   }
 
-  const getDateLast30Day = () => {
-    let date = new Date();
-    date.setDate(date.getDate() - 89);
-    let dd = String(date.getDate()).padStart(2, '0');
-    let mm = String(date.getMonth() + 1).padStart(2, '0');
-    let yyyy = date.getFullYear();
-    return `${yyyy}-${mm}-${dd}`;
+  const getYesterdaysDateString = () => {
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    return yesterday.toDateString();
   }
 
   const getProvince = (provinceName) => {
@@ -46,31 +44,48 @@ function App() {
 
   useEffect(() => {
     const PROVINCE_CODE = [
-      'BC', 'AB', 'SK', 'MB', 'ON',
-      'QC', 'NL', 'NB', 'PE',
-      'NS', 'YT', 'NT', 'NU'
+      'british%20columbia', 'alberta', 'saskatchewan', 'manitoba', 'ontario',
+      'quebec', 'newfoundland%20and%20labrador', 'new%20brunswick', 'prince%20edward%20island',
+      'nova%20scotia', 'yukon', 'northwest%20territories', 'nunavut'
     ];
 
-    let fetchCalls = []
-    let last30Days = []
+    let last90Days = [];
 
     for (const province of PROVINCE_CODE) {
-      fetchCalls.push(fetch(`${API}/${province}?date=${getTodaysDate()}`));
-      last30Days.push(fetch(`${API}/${province}?after=${getDateLast30Day()}`))
+      last90Days.push(fetch(`${API}/${province}?lastdays=90`));
     }
 
-    Promise.all(fetchCalls).then(results =>
+    Promise.all(last90Days).then(results =>
       results.forEach(result => result.json().then(data => {
+        console.log(data);
         setProvinceReport(provinceReport => [...provinceReport, data])
       }))
-    )
-
-    Promise.all(last30Days).then(results =>
-      results.forEach(result => result.json().then(data => {
-        setGraphInfo(graphInfo => [...graphInfo, data])
-      }))
-    )
+    );
   }, []);
+
+  useEffect(() => {
+    if (provinceReport.length === 13) {
+      for (let i = 0; i < provinceReport.length; i++) {
+        let province = provinceReport[i];
+        console.log(province)
+        let data = province.timeline;
+        let newData = [];
+        let dates = Object.keys(data.cases);
+        for (let j = 0; j < dates.length; j++) {
+
+          let newEntry = {
+            'province': province.province,
+            'date': dates[j],
+            'cases': data.cases[dates[j]],
+            'deaths': data.deaths[dates[j]],
+            'recovered': data.recovered[dates[j]]
+          };
+          newData.push(newEntry);
+        }
+        setGraphInfo(graphInfo => [...graphInfo, newData]);
+      }
+    }
+  }, [provinceReport])
 
   return (
     <div id="app-container">
@@ -80,6 +95,8 @@ function App() {
         displayModal={displayModal}
         getProvince={getProvince}
         graphInfo={graphInfo}
+        yeterdaysDate={getYesterdaysDate()}
+        yesterdaysDateText={getYesterdaysDateString()}
       />
       <h1 id="app-title">Canada Daily Covid-19 Tracker</h1>
       <Map getProvince={getProvince} />
