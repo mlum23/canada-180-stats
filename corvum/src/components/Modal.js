@@ -60,19 +60,19 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo, yeterdaysD
     const getProvinceFullName = () => {
         if (isValidModalInfo()) {
             let names = {
-                'AB': 'Alberta',
-                'BC': 'British Columbia',
-                'SK': 'Saskatchewan',
-                'MB': 'Manitoba',
-                'ON': 'Ontario',
-                'QC': 'Quebec',
-                'NL': 'Newfoundland and Labrador',
-                'NB': 'New Brunswick',
-                'PE': 'Prince Edward Island',
-                'NS': 'Nova Scotia',
-                'YT': 'Yukon',
-                'NT': 'Northwest Territories',
-                'NU': 'Nunavut'
+                'alberta': 'Alberta',
+                'british columbia': 'British Columbia',
+                'saskatchewan': 'Saskatchewan',
+                'manitoba': 'Manitoba',
+                'ontario': 'Ontario',
+                'quebec': 'Quebec',
+                'newfoundland and labrador': 'Newfoundland and Labrador',
+                'new brunswick': 'New Brunswick',
+                'prince edward island': 'Prince Edward Island',
+                'nova scotia': 'Nova Scotia',
+                'yukon': 'Yukon',
+                'northwest territories': 'Northwest Territories',
+                'nunavut': 'Nunavut'
             };
             return names[modalInfo.province];
         }

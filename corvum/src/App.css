@@ -1,85 +1,122 @@
+h2 {
+  font-size: 1.5vmax;
+}
+
+h1 {
+  font-size: 1.75vmax;
+}
+
+#loading-modal {
+  display: flex;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: #c5c6d0;
+  z-index: 25;
+  align-items: center;
+  justify-content: center;
+}
+
+#loader {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid red;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 #app-container {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 #app-title {
-    font-size: 3vmax;
-    margin-top: -35vmax;
+  font-size: 3vmax;
+  margin-top: -35vmax;
 }
 
 #modal {
-    display: none;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 5;
+  display: none;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 5;
 }
 
 #close-modal {
-    position: fixed;
-    text-align: right;
-    font-size: 36px;
-    margin-left: -3%;
+  position: fixed;
+  text-align: right;
+  font-size: 36px;
+  margin-left: -3%;
 }
 
 #close-modal:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #graph-title {
-    padding-top: 20px;
+  padding-top: 20px;
 }
 
 #info {
-    background-color: #fefefe;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    height: auto;
-    width: auto; /* Could be more or less, depending on screen size */
-    padding-left: 5%;
-    padding-right: 5%;
-    overflow-y: overlay;
-    border-radius: 10px;
-    z-index: 5;
-
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  height: auto;
+  width: auto;
+  padding-left: 5%;
+  padding-right: 5%;
+  overflow-y: overlay;
+  border-radius: 10px;
+  z-index: 5;
 }
 
-#info p{
-    font-size: 18px;
+#info p {
+  font-size: 18px;
 }
 
 #map-container {
-    position: absolute;
-    /* margin-top: 50%; */
-    width: 75vmax;
-    height: auto;
+  position: absolute;
+  /* margin-top: 50%; */
+  width: 75vmax;
+  height: auto;
 }
 
-svg.canada-map{
-    margin: auto;
-    width: 50vmax;
+svg.canada-map {
+  margin: auto;
+  width: 50vmax;
 }
 
 .recharts-surface {
-    padding: -5%;
+  padding: -5%;
 }
 
 .canada-map > g {
-    width: 55vmax;
+  width: 55vmax;
 }
 
 g:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
-
 
 /* @media only screen and (max-width: 768px) {
     #map-container {
@@ -95,4 +132,3 @@ g:hover {
         width: 65vmax;
     }     
 } */
-

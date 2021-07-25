@@ -1,6 +1,8 @@
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 const Graph = ({ graphInfo, province, dataKey, compareProvince }) => {
 
+    const X_AXIS_DATA_KEY = "date";
+
     const getProvinceInfo = (province) => {
         for (const info of graphInfo) {
             if (info[0].province === province) {
@@ -33,7 +35,7 @@ const Graph = ({ graphInfo, province, dataKey, compareProvince }) => {
                 margin={{ top: 5, right: 20, bottom: 5, left: 25 }}
             >
                 <CartesianGrid stroke="#ccc" strokeDasharray="3 3" />
-                <XAxis dataKey='date' allowDuplicatedCategory={false} />
+                <XAxis dataKey={X_AXIS_DATA_KEY} allowDuplicatedCategory={false} />
                 <YAxis />
                 <Tooltip />
                 <Legend />
