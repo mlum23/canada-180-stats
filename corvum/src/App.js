@@ -133,7 +133,7 @@ function App() {
         yesterdaysDateText={getYesterdaysDateString()}
       />
       <h1 id="app-title">{PAGE_TITLE}</h1>
-      <h2>Select a province to view its stats</h2>
+      <h2>Select a region to view its stats</h2>
 
       <Map getProvince={getProvince} />
     </div>
