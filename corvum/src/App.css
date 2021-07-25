@@ -88,6 +88,7 @@ h1 {
   overflow-y: overlay;
   border-radius: 10px;
   z-index: 5;
+  overflow-x: hidden;
 }
 
 #info p {
@@ -96,7 +97,7 @@ h1 {
 
 #map-container {
   position: absolute;
-  /* margin-top: 50%; */
+  margin-top: 100px;
   width: 75vmax;
   height: auto;
 }
@@ -118,17 +119,8 @@ g:hover {
   cursor: pointer;
 }
 
-/* @media only screen and (max-width: 768px) {
-    #map-container {
-        margin-top: 50%;
-        width: 75vmax;
-    }    
+@media only screen and (max-width: 400px) {
+  #map-container {
+    transform: scale(0.8);
+  }
 }
-
-@media only screen and (max-width: 750px) {
-    #map-container {
-        margin-top: 100%;
-
-        width: 65vmax;
-    }     
-} */

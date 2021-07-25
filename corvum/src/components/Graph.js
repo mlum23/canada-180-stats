@@ -12,7 +12,7 @@ const Graph = ({ graphInfo, province, dataKey, compareProvince }) => {
     }
 
     const showCompare = () => {
-        if (compareProvince != null) {
+        if (compareProvince != null && compareProvince !== 'default-value') {
             return (
                 <Line
                     name={compareProvince}
@@ -25,7 +25,6 @@ const Graph = ({ graphInfo, province, dataKey, compareProvince }) => {
             );
         }
     }
-    console.log(graphInfo);
 
     return (
         <ResponsiveContainer width="100%" height={300}>

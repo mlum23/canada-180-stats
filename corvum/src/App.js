@@ -3,6 +3,7 @@ import Loading from "./components/Loading";
 import Map from "./components/Map";
 import React, { useState, useEffect } from "react";
 import Modal from "./components/Modal";
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 function App() {
   const [provinceReport, setProvinceReport] = useState([]);
@@ -54,7 +55,6 @@ function App() {
   const getProvince = (provinceName) => {
     for (const report of provinceReport) {
       if (report.province === provinceName) {
-        console.log(report);
         setModalInfo(report);
         setDisplayModal("flex");
         break;
@@ -90,7 +90,6 @@ function App() {
     Promise.all(last90Days).then((results) =>
       results.forEach((result) =>
         result.json().then((data) => {
-          console.log(data);
           setProvinceReport((provinceReport) => [...provinceReport, data]);
         })
       )
@@ -101,7 +100,6 @@ function App() {
     if (provinceReport.length === 13) {
       for (let i = 0; i < provinceReport.length; i++) {
         let province = provinceReport[i];
-        console.log(province);
         let data = province.timeline;
         let newData = [];
         let dates = Object.keys(data.cases);
@@ -135,6 +133,8 @@ function App() {
         yesterdaysDateText={getYesterdaysDateString()}
       />
       <h1 id="app-title">{PAGE_TITLE}</h1>
+      <h2>Select a province to view its stats</h2>
+
       <Map getProvince={getProvince} />
     </div>
   );

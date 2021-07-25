@@ -54,6 +54,9 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo, yeterdaysD
     }
 
     const onClickExitModal = () => {
+        let compareProvinceOption = document.getElementById('graph-compare');
+        compareProvinceOption.value = 'default-value';
+        setCompareProvince('default-value');
         setDisplayModal("none");
     }
 
@@ -109,7 +112,7 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo, yeterdaysD
                 </select>
 
                 <select id="graph-compare" onChange={handleOnChangeCompare}>
-                    <option defaultValue hidden>Compare with a province</option>
+                    <option defaultValue hidden value='default-value'>Compare with a province</option>
                     <option value="alberta">Alberta</option>
                     <option value="british columbia">British Columbia</option>
                     <option value="saskatchewan">Saskatchewan</option>
