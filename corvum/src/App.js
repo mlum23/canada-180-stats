@@ -3,7 +3,6 @@ import Loading from "./components/Loading";
 import Map from "./components/Map";
 import React, { useState, useEffect } from "react";
 import Modal from "./components/Modal";
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 function App() {
   const [provinceReport, setProvinceReport] = useState([]);
@@ -12,7 +11,7 @@ function App() {
   const [graphInfo, setGraphInfo] = useState([]);
 
   const API = "https://disease.sh/v3/covid-19/historical/can";
-  const PAGE_TITLE = "Last 90 Days Covid-19 Stats";
+  const PAGE_TITLE = "Last 180 Days Covid-19 Stats";
 
   const hideLoader = () => {
     const ANIMATION_DURATION = 500;
@@ -84,7 +83,7 @@ function App() {
     let last90Days = [];
 
     for (const province of PROVINCE_CODE) {
-      last90Days.push(fetch(`${API}/${province}?lastdays=90`));
+      last90Days.push(fetch(`${API}/${province}?lastdays=180`));
     }
 
     Promise.all(last90Days).then((results) =>

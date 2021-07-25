@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo, yeterdaysDate, yesterdaysDateText }) => {
     let [dataKey, setDataKey] = useState('cases');
-    let [graphTitle, setGraphTitle] = useState('Last 90 Days: Total Cases')
+    let [graphTitle, setGraphTitle] = useState('Last 180 Days: Total Cases')
     let [compareProvince, setCompareProvince] = useState(null);
 
     const changeTitle = (event) => {
@@ -12,7 +12,7 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo, yeterdaysD
             'deaths': 'Total Deaths',
             'recovered': 'Total Recovered',
         }
-        setGraphTitle(`Last 90 Days: ${titles[event.target.value]}`);
+        setGraphTitle(`Last 180 Days: ${titles[event.target.value]}`);
         setDataKey(event.target.value);
     }
 
@@ -56,6 +56,8 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo, yeterdaysD
     const onClickExitModal = () => {
         let compareProvinceOption = document.getElementById('graph-compare');
         compareProvinceOption.value = 'default-value';
+        let info = document.getElementById('info');
+        info.scrollTo(0, 0);
         setCompareProvince('default-value');
         setDisplayModal("none");
     }
@@ -89,14 +91,15 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo, yeterdaysD
         <div id="modal" style={{ display: displayModal }}>
             <div id="info">
                 <div id="close-modal" onClick={onClickExitModal}>&times;</div>
-                {/* <div id="test"> */}
                 <h1>{getProvinceFullName()}</h1>
                 <h2>Last Updated: {yesterdaysDateText}</h2>
-                <p><b>Total Cases: </b>{getCases('cases')}</p>
-                <p><b>New Cases: </b>{getNewCases('cases')}</p>
-                <p><b>Total Deaths: </b>{getCases('deaths')}</p>
-                <p><b>New Deaths: </b>{getNewCases('deaths')}</p>
-                <p><b>Recovered: </b>{getCases('recovered')}</p>
+                <div id="modal-stats">
+                    <p><b>Total Cases: </b>{getCases('cases')}</p>
+                    <p><b>New Cases: </b>{getNewCases('cases')}</p>
+                    <p><b>Total Deaths: </b>{getCases('deaths')}</p>
+                    <p><b>New Deaths: </b>{getNewCases('deaths')}</p>
+                    <p><b>Recovered: </b>{getCases('recovered')}</p>
+                </div>
 
                 <h3 id="graph-title">{graphTitle}</h3>
                 <Graph
@@ -112,7 +115,7 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo, yeterdaysD
                 </select>
 
                 <select id="graph-compare" onChange={handleOnChangeCompare}>
-                    <option defaultValue hidden value='default-value'>Compare with a province</option>
+                    <option defaultValue hidden value='default-value'>Compare with a region</option>
                     <option value="alberta">Alberta</option>
                     <option value="british columbia">British Columbia</option>
                     <option value="saskatchewan">Saskatchewan</option>
@@ -127,7 +130,6 @@ const Modal = ({ modalInfo, displayModal, setDisplayModal, graphInfo, yeterdaysD
                     <option value="northwest territories">Northwest Territories</option>
                     <option value="nunavut">Nunavut</option>
                 </select>
-                {/* </div> */}
             </div>
         </div>
     )

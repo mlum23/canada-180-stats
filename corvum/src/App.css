@@ -1,8 +1,8 @@
 h2 {
-  font-size: 1.5vmax;
+  font-size: 1.25vmax;
 }
 
-h1 {
+#info > h1 {
   font-size: 1.75vmax;
 }
 
@@ -63,9 +63,7 @@ h1 {
 
 #close-modal {
   position: fixed;
-  text-align: right;
   font-size: 36px;
-  margin-left: -3%;
 }
 
 #close-modal:hover {
@@ -82,7 +80,7 @@ h1 {
   padding: 20px;
   border: 1px solid #888;
   height: auto;
-  width: auto;
+  width: 55%;
   padding-left: 5%;
   padding-right: 5%;
   overflow-y: overlay;
@@ -92,12 +90,12 @@ h1 {
 }
 
 #info p {
-  font-size: 18px;
+  font-size: 1.1em;
 }
 
 #map-container {
   position: absolute;
-  margin-top: 100px;
+  padding-top: 2.5%;
   width: 75vmax;
   height: auto;
 }
@@ -105,10 +103,6 @@ h1 {
 svg.canada-map {
   margin: auto;
   width: 50vmax;
-}
-
-.recharts-surface {
-  padding: -5%;
 }
 
 .canada-map > g {
@@ -122,5 +116,11 @@ g:hover {
 @media only screen and (max-width: 400px) {
   #map-container {
     transform: scale(0.8);
+  }
+
+  .recharts-wrapper {
+    width: 500px;
+    height: 500px;
+    /* transform: scale(0.5); */
   }
 }
