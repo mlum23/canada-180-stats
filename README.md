@@ -16,3 +16,4 @@ An interactive map that displays basic stats of each province/territory from the
 - React
 - [Disease.sh API](https://disease.sh/)
 - [React Canada Map ](https://www.npmjs.com/package/react-canada-map)
+- [Recharts](https://recharts.org/en-US)
